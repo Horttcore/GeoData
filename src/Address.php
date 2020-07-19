@@ -1,12 +1,15 @@
 <?php
 namespace RalfHortt\GeoData;
 
+use RalfHortt\GeoData\Contracts\GeoDataProviderContract;
+use RalfHortt\GeoData\Contracts\GeoDataCacheProviderContract;
 use RalfHortt\GeoData\Providers\OpenStreetMap;
 
 class Address
 {
     protected $request;
     protected $geoDataProvider;
+    protected $geoDataCacheProvider;
     protected $response;
 
     protected $latitude;
@@ -17,11 +20,14 @@ class Address
     protected $postCode;
     protected $country;
 
-    public function __construct(string $request, GeoDataProvider $provider = null)
+    protected $results = 0;
+    protected $resultCount = 0;
+
+    public function __construct(string $request, GeoDataProviderContract $provider = null, ?GeoDataCacheProviderContract $cache = null)
     {
         $this->request = $request;
-        $this->geoDataProvider = $provider ? $provider : new OpenStreetMap;
-        $this->geoDataProvider->request($this);
+        $this->geoDataProvider = $provider ? $provider : new OpenStreetMap($this, $cache);
+        $this->geoDataProvider->get();
     }
 
     public function getResponse(): \stdClass
@@ -32,6 +38,11 @@ class Address
     public function getRequest()
     {
         return $this->request;
+    }
+
+    public function getResults()
+    {
+        return $this->results;
     }
 
     public function getStreet(): string
@@ -72,6 +83,12 @@ class Address
     public function setResponse($response): void
     {
         $this->response = $response;
+    }
+
+    public function setResults($results): void
+    {
+        $this->results = $results;
+        $this->resultCount = count($this->results);
     }
 
     public function setStreet(string $street): void

@@ -2,8 +2,11 @@
 namespace RalfHortt\GeoData\Contracts;
 
 use RalfHortt\GeoData\Address;
+use RalfHortt\GeoData\Contracts\GeoDataCacheProviderContract;
 
-abstract class GeoDataProviderContract
+interface GeoDataProviderContract
 {
-    abstract public function request(Address $address): void;
+    public function __construct(Address $address, GeoDataCacheProviderContract $cache);
+    public function get();
+    public function request(): void;
 }

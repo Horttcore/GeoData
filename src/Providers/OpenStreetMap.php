@@ -2,13 +2,13 @@
 namespace RalfHortt\GeoData\Providers;
 
 use RalfHortt\GeoData\Address;
-use RalfHortt\GeoData\Contracts\GeoDataProviderContract;
+use RalfHortt\GeoData\Abstracts\AbstractGeoDataProvider;
 
-class OpenStreetMap // implements GeoDataProviderContract
+class OpenStreetMap extends AbstractGeoDataProvider
 {
-    public function request(Address $address)
+    public function request(): void
     {
-        $url = sprintf('https://nominatim.openstreetmap.org/?format=json&addressdetails=1&format=json&q=%s', urlencode($address->getRequest()));
+        $url = sprintf('https://nominatim.openstreetmap.org/?format=json&addressdetails=1&format=json&q=%s', urlencode($this->address->getRequest()));
         $response = $this->sendRequest($url);
         $response = \json_decode($response);
 
@@ -16,14 +16,15 @@ class OpenStreetMap // implements GeoDataProviderContract
             return;
         }
 
-        $address->setResponse($response);
-        $address->setStreet($response[0]->address->road);
-        $address->setStreetNumber($response[0]->address->house_number);
-        $address->setPostCode($response[0]->address->postcode);
-        $address->setCity($response[0]->address->city);
-        $address->setCountry($response[0]->address->country);
-        $address->setLatitude($response[0]->lat);
-        $address->setLongitude($response[0]->lon);
+        $this->address->setResponse($response);
+        $this->address->setResults($response);
+        $this->address->setStreet($response[0]->address->road);
+        $this->address->setStreetNumber($response[0]->address->house_number);
+        $this->address->setPostCode($response[0]->address->postcode);
+        $this->address->setCity($response[0]->address->city);
+        $this->address->setCountry($response[0]->address->country);
+        $this->address->setLatitude($response[0]->lat);
+        $this->address->setLongitude($response[0]->lon);
     }
 
     protected function sendRequest(string $url)
