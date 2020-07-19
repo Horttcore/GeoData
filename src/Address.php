@@ -23,7 +23,7 @@ class Address
     protected $results = 0;
     protected $resultCount = 0;
 
-    public function __construct(string $request, GeoDataProviderContract $provider = null, ?GeoDataCacheProviderContract $cache = null)
+    public function __construct(string $request, $provider = null, $cache = null)
     {
         $this->request = $request;
         $this->geoDataProvider = $provider ? $provider : new OpenStreetMap($this, $cache);

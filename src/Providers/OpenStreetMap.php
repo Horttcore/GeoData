@@ -18,13 +18,28 @@ class OpenStreetMap extends AbstractGeoDataProvider
 
         $this->address->setResponse($response);
         $this->address->setResults($response);
-        $this->address->setStreet($response[0]->address->road);
-        $this->address->setStreetNumber($response[0]->address->house_number);
-        $this->address->setPostCode($response[0]->address->postcode);
-        $this->address->setCity($response[0]->address->city);
-        $this->address->setCountry($response[0]->address->country);
-        $this->address->setLatitude($response[0]->lat);
-        $this->address->setLongitude($response[0]->lon);
+
+        if (isset($response[0]->address->road)) {
+            $this->address->setStreet($response[0]->address->road);
+        }
+        if (isset($response[0]->address->house_number)) {
+            $this->address->setStreetNumber($response[0]->address->house_number);
+        }
+        if (isset($response[0]->address->postcode)) {
+            $this->address->setPostCode($response[0]->address->postcode);
+        }
+        if (isset($response[0]->address->city)) {
+            $this->address->setCity($response[0]->address->city);
+        }
+        if (isset($response[0]->address->country)) {
+            $this->address->setCountry($response[0]->address->country);
+        }
+        if (isset($response[0]->lat)) {
+            $this->address->setLatitude($response[0]->lat);
+        }
+        if (isset($response[0]->lon)) {
+            $this->address->setLongitude($response[0]->lon);
+        }
     }
 
     protected function sendRequest(string $url)
