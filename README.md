@@ -2,7 +2,7 @@
 
 ## Installation
 
-`composer require ralfhortt/address`
+`composer require ralfhortt/geodata`
 
 ## Example
 
