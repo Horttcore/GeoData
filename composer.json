@@ -5,12 +5,22 @@
     "authors": [
         {
             "name": "Ralf Hortt",
-            "email": "me@horttcore.de"
+            "email": "mail@ralfhortt.dev"
         }
     ],
     "autoload": {
         "psr-4": {
             "RalfHortt\\GeoData\\": "src/"
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "pestphp/pest": "^3.3",
+        "phpstan/phpstan": "^1.12"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }
