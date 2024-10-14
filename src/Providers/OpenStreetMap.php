@@ -22,13 +22,13 @@ class OpenStreetMap extends AbstractGeoDataProvider
         return $this->address
             ->setResponse($decodedResponse)
             ->setResults($decodedResponse)
-            ->setStreet($decodedResponse[0]->address?->road)
-            ->setStreetNumber($decodedResponse[0]->address?->house_number)
-            ->setPostCode($decodedResponse[0]->address?->postcode)
-            ->setCity($decodedResponse[0]->address?->city)
-            ->setCountry($decodedResponse[0]->address?->country)
-            ->setLatitude($decodedResponse[0]->lat)
-            ->setLongitude($decodedResponse[0]->lon);
+            ->setStreet(isset($decodedResponse[0]) ? $decodedResponse[0]->address?->road : null)
+            ->setStreetNumber(isset($decodedResponse[0]) ? $decodedResponse[0]->address?->house_number : null)
+            ->setPostCode(isset($decodedResponse[0]) ? $decodedResponse[0]->address?->postcode : null)
+            ->setCity(isset($decodedResponse[0]) ? $decodedResponse[0]->address?->city : null)
+            ->setCountry(isset($decodedResponse[0]) ? $decodedResponse[0]->address?->country : null)
+            ->setLatitude(isset($decodedResponse[0]) ? $decodedResponse[0]->lat : null)
+            ->setLongitude(isset($decodedResponse[0]) ? $decodedResponse[0]->lon : null);
     }
 
     protected function sendRequest(string $url): mixed
