@@ -25,7 +25,7 @@ class OpenStreetMap extends AbstractGeoDataProvider
             ->setStreet($decodedResponse[0]->address?->road)
             ->setStreetNumber($decodedResponse[0]->address?->house_number)
             ->setPostCode($decodedResponse[0]->address?->postcode)
-            ->setCity($decodedResponse[0]->address?->city)
+            ->setCity(isset($decodedResponse[0]->address?->city) ? $decodedResponse[0]->address?->city : $decodedResponse[0]->address?->town)
             ->setCountry($decodedResponse[0]->address?->country)
             ->setLatitude($decodedResponse[0]->lat)
             ->setLongitude($decodedResponse[0]->lon);
